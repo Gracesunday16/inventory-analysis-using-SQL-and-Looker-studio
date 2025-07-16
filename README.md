@@ -233,16 +233,74 @@ FROM data-analytics-project-438511.grocery_inventory.inventory_analysis
 WHERE Expiration_Date < CURRENT_DATE()
 ORDER BY Expiration_Date ASC;
 
-Purpose: Identifies expired items (e.g., 11/18/2024 is past July 4, 2025).10. Prepare for Looker StudioEDA
 
-Summary Table:CREATE TABLE data-analytics-project-438511.grocery_inventory.eda_summary AS
-SELECT 
-    Product_Category,
-    COUNT(DISTINCT Product_ID) AS product_count,
-    SUM(Sales_Volume) AS total_sales,
-    SUM(Sales_Volume * Unit_Price) AS total_revenue,
-    AVG(Stock_Quantity) AS avg_stock,
-    COUNT(CASE WHEN Stock_Quantity = 0 THEN 1 END) AS stockout_events,
-    COUNT(CASE WHEN Stock_Quantity <= Reorder_Level THEN 1 END) AS near_reorder
-FROM data-analytics-project-438511.grocery_inventory.inventory_analysis
-GROUP BY Product_Category;
+# Main SQL code
+SELECT
+  -- 📌 Original Fields
+  *,
+
+  -- 💰 Inventory Value = Quantity × Unit Price
+  (Stock_quantity * Unit_price) AS Inventory_Value,
+
+  -- 🔺 Stock Status: Is quantity below or above reorder level?
+  CASE 
+    WHEN Stock_quantity <= Reorder_level THEN 'Low Stock'
+    WHEN Stock_Quantity > (Reorder_Level * 2) THEN 'Overstocked'
+    ELSE 'Adequate Stock'
+  END AS Stock_Status,
+
+  -- 🔄 Stock Flag: Is the product in stock or out of stock?
+  CASE 
+    WHEN Stock_quantity = 0 THEN 'Out of Stock'
+    ELSE 'In Stock'
+  END AS Stock_Flag,
+
+  -- 🔥 Restock Priority: Do we need to reorder urgently?
+  CASE 
+    WHEN Stock_quantity <= Reorder_level AND Sales_volume > 0 THEN 'Urgent'
+    WHEN Stock_quantity <= Reorder_level THEN 'Needs Review'
+    ELSE 'OK'
+  END AS Restock_Priority,
+  
+   -- Reorder Cost: Calculate cost of placing a reorder (Reorder_Quantity * Unit_Price). Budget for restocking expenses
+    (Reorder_Quantity * Unit_Price) AS Reorder_Cost,
+
+    -- Estimated Stock Runout Days: Estimate days until stock runs out based on daily Sales_Volume. To plan restocking schedules to avoid stockouts
+    -- Note: Assumes Sales_Volume is daily; adjust multiplier (e.g., * 30 for monthly) if needed
+    CASE 
+        WHEN Sales_Volume > 0 THEN (Stock_Quantity / Sales_Volume)
+        ELSE NULL 
+    END AS Estimated_Runout_Days,
+
+    -- Sales-to-Stock Ratio: Measure demand relative to stock. High ratio indicates strong demand; NULL if Stock_Quantity is 0
+    -- Use Case: Identify high-demand or overstocked products
+    CASE 
+        WHEN Stock_Quantity > 0 THEN (Sales_Volume / Stock_Quantity)
+        ELSE NULL 
+    END AS Sales_to_Stock_Ratio,
+
+  -- Reorder Urgency Ratio: Ratio < 1 suggests urgent need for reorder. It prioritize purchase orders
+    (Stock_Quantity / Reorder_Level )AS Reorder_Urgency_Ratio,
+
+  -- 📅 Received Month: Convert Received Date into Year-Month format. Checks monthly trend
+  FORMAT_DATE('%Y-%m', Date_Received ) AS Received_Month,
+
+   -- Stock Turnover Days: Convert Inventory_Turnover_Rate to days to sell entire stock. Assess inventory efficiency
+    CASE 
+        WHEN Inventory_Turnover_Rate > 0 THEN (365 / Inventory_Turnover_Rate)
+        ELSE NULL 
+    END AS Stock_Turnover_Days,
+
+   -- 📈 Turnover Category: How fast is this product moving?
+  CASE
+      WHEN 365 / Inventory_turnover_rate < 60 THEN 'Fast-moving'
+      WHEN 365 / Inventory_turnover_rate BETWEEN 60 AND 120 THEN 'Moderate'
+      ELSE 'Slow-moving'
+  END AS Turnover_Category,
+
+  -- 🔢 Reorder Gap: How much quantity should we top up? I used 'greatest than 0' to get only positive numbers
+  GREATEST(Reorder_quantity - Stock_quantity, 0) AS Reorder_gap
+
+FROM 
+ data-analytics-project-438511.grocery_inventory.inventory_analysis
+
