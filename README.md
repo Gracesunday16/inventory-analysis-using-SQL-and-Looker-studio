@@ -1,27 +1,24 @@
 # Inventory Management Data Analytic project using SQL and Looker studio
 
-
-About Dataset
-Grocery Inventory and Sales Dataset
-Dataset Overview:
+# Dataset Overview:
 This dataset provides detailed information on various grocery items, including product details, supplier information, stock levels, reorder data, pricing, and sales performance. The data covers 990 products across various categories such as Grains & Pulses, Beverages, Fruits & Vegetables, and more. The dataset is useful for inventory management, sales analysis, and supply chain optimization.
 
-# Columns definations
--Product_ID: Unique identifier for each product.
--Product_Name: Name of the product.
--Category: The product category (e.g., Grains & Pulses, Beverages, Fruits & Vegetables).
--Supplier_ID: Unique identifier for the product supplier.
--Supplier_Name: Name of the supplier.
--Stock_Quantity: The current stock level of the product in the warehouse.
--Reorder_Level: The stock level at which new stock should be ordered.
--Reorder_Quantity: The quantity of product to order when the stock reaches the reorder level.
--Unit_Price: Price per unit of the product.
--Date_Received: The date the product was received into the warehouse.
--Last_Order_Date: The last date the product was ordered.
--Expiration_Date: The expiration date of the product, if applicable.
--Warehouse_Location: The warehouse address where the product is stored.
--Sales_Volume: The total number of units sold.
--Inventory_Turnover_Rate: The rate at which the product sells and is replenished.
+# Columns 
+-Product_ID
+-Product_Name
+-Category
+-Supplier_ID
+-Supplier_Name
+-Stock_Quantity
+-Reorder_Level
+-Reorder_Quantity
+-Unit_Price
+-Date_Received
+-Last_Order_Date
+-Expiration_Date
+-Warehouse_Location
+-Sales_Volume
+-Inventory_Turnover_Rate
 -Status: Current status of the product (e.g., Active, Discontinued, Backordered).
 
 # Dataset Usage:
@@ -37,10 +34,6 @@ Predicting reorder quantities using machine learning.
 Analyzing inventory turnover to optimize stock levels.
 Conducting sales trend analysis to identify popular or slow-moving items.
 Improving supply chain efficiency by analyzing supplier performance.
-
-# Notes:
-The expiration dates and last order dates should be considered for time-sensitive or perishable items. In short, track these dates to manage perishable inventory effectively and reduce losses.
-Some products have been marked as discontinued or backordered, indicating their current status in the inventory system.
 
 # Exploratory Data Analysis (EDA) 
 I perform Exploratory Data Analysis (EDA) on the Grocery Inventory and Sales Dataset in BigQuery using SQL, I focused on understanding the dataset’s structure, distributions, patterns, and potential issues to inform your inventory management project.
@@ -304,3 +297,108 @@ SELECT
 FROM 
  data-analytics-project-438511.grocery_inventory.inventory_analysis
 
+
+insights
+
+✅ Overstock Risk:
+Some categories (e.g., Fruits & Vegetables) are far above reorder level — may lead to holding cost.
+
+🔺 Reorder Cost Volatility:
+Inventory value and reorder cost trend don’t align in some months — flagging potential supply inefficiency.
+
+⛔ Runout Risk:
+Some categories have low stock with high sales-to-stock ratios — restock priority needed.
+
+🧮 Healthy Mix:
+Your stock status chart shows a good balance — ~47% Adequate Stock is a strong benchmark.
+
+✅ Insight Captions for Each Chart
+🟩 1. Bar Chart – “Stock vs Reorder Threshold by Product Category”
+Insight:
+This chart compares current stock against reorder levels across categories.
+📌 Categories like Fruits & Vegetables and Dairy are well above reorder levels, suggesting potential overstock, while Beverages and Bakery are approaching critical thresholds, indicating a need to review replenishment plans.
+
+🟢 2. Donut Chart – “Inventory Health Status Distribution”
+Insight:
+Inventory is mostly healthy, with 47% of products adequately stocked.
+⚠️ However, 26% are low in stock, requiring timely restocking, and 27% are overstocked, which may lead to holding cost or spoilage risk.
+
+📈 3. Line Chart – “Inventory & Reorder Cost Trend by Month”
+Insight:
+This trend highlights months where reorder costs spike despite stable inventory value — possibly due to supplier delays or uneven purchase planning.
+Look into months with sharp reorder cost peaks (e.g., Jan 2024, Apr 2024) for procurement review.
+
+📋 4. Table – “Category-Level Inventory Summary”
+Insight:
+This table summarizes stock quantity, value, and runout risk.
+Fruits & Vegetables have the highest inventory value and longest runout period, indicating potential overstock.
+In contrast, Beverages and Bakery show shorter runout days, highlighting urgency for replenishment.
+
+🔵 5. Bubble Chart – “High-Impact Inventory by Cost and Quantity”
+Insight:
+This bubble chart maps products by reorder cost vs stock quantity, with bubble size representing inventory value.
+Bubbles in the top-right corner indicate high-cost, high-stock products that demand financial oversight.
+Items in the bottom-left are low-priority but should be monitored for future demand shifts.
+
+
+📌 Inventory Insights:
+47% of products are adequately stocked, reflecting healthy inventory control, but over 50% show stock imbalances — either understocked or overstocked.
+
+Fruits & Vegetables hold the highest stock quantity and inventory value, yet show excessive buffer over reorder levels, pointing to potential overstock and holding costs.
+
+Beverages and Bakery categories are approaching reorder thresholds, with relatively low runout days, suggesting the need for urgent replenishment.
+
+A visible gap between Inventory Value and Reorder Cost in some months highlights procurement timing inefficiencies or variable supplier costs.
+
+High reorder costs are clustered in high-stock products in the bubble chart — these items need stock optimization or demand review.
+
+✅ Recommendations:
+Prioritize restocking categories with low runout days (e.g., Bakery, Beverages) to avoid stockouts.
+
+Review overstocked items like Fruits & Vegetables to reduce excess holding costs or apply targeted promotions.
+
+Investigate reorder cost spikes in months where inventory value remained stable — this may reveal opportunities for better supplier negotiation.
+
+Implement reorder urgency alerts based on runout days and restock priority to enhance replenishment decision-making.
+
+Monitor sales-to-stock ratios to identify fast-moving items worth prioritizing in inventory and forecast models.
+
+✨ How to Display It
+
+
+ Key Insights:
+47% of products are adequately stocked, but over 50% fall into either low stock or overstocked categories — indicating opportunities to optimize inventory balance.
+
+Fruits & Vegetables show the highest stock and inventory value, significantly exceeding their reorder levels — suggesting potential overstock and carrying costs.
+
+Bakery and Beverages have relatively low stock quantities and runout days, flagging them as high-priority for replenishment.
+
+The line chart reveals that Inventory Value consistently exceeds Reorder Cost, indicating controlled spending — except in October, where Reorder Cost slightly exceeds Inventory Value, possibly due to urgent or bulk restocking.
+
+In the bubble chart, high reorder cost and inventory value converge in certain categories, which may require inventory budget optimization.
+
+✅ Recommendations:
+Replenish critical categories like Bakery and Beverages to prevent stockouts.
+
+Audit overstocked categories, especially Fruits & Vegetables, to minimize waste and holding costs.
+
+Review October’s procurement data to understand the spike in reorder costs and identify improvement areas in supply planning.
+
+Leverage restock priority and runout days metrics to trigger timely reorder actions.
+
+Continuously monitor Sales-to-Stock Ratios to align stock levels with demand patterns.
+
+Would you like a condensed 2–3 sentence version for a manager view or executive report?
+
+
+
+
+
+
+
+
+
+Ask ChatGPT
+
+
+in
