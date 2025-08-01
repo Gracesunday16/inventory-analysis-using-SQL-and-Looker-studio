@@ -182,25 +182,52 @@ Product Table with filters for category, supplier, priority, etc.
 A text-based summary of insights and recommendations generated based on analysis.
 
 
-# 🧠 Sample Insights (From Visuals)
-Fruits & Vegetables show the highest estimated runout days, but sales are low — risk of spoilage due to slow turnover.
+# ✅ Insights
+. 
+- Fruits & Vegetables category shows high stock quantity significantly exceeding their reorder levels - suggesting overstocking which could increase storage costs or lead to spoilage.
+- Beverages, Bakery and Fat and Oil categories are approaching critical thresholds, indicating a need to review replenishment plans.
+- Grain and Pulses category has stock levels below reorder thresholds, putting them at high risk of stockouts and potential lost sales.
+- Dairy and Seafood categoroes are well aligned- efficient inventory control
 
-Many products fall under High Restock Priority, especially in Bakery and Seafood — restock cycles need tightening.
+2. **Inventory health**
+47% of all inventory are currently in low stock condition, indicating a widespread risk of stockouts if not addressed promptly. 28 % of inventory is overstocked, which may lead to excess holding costs and potentialwaste, especially for perishable goods.Only 27% of inventory is at an adequate stock level, suggesting improvement in inventory planning.
 
-Bakery and Oils & Fats have high average stock days but low sales efficiency — potential overstock.
+for dashboard
+Nearly half of inventory is understocked (47%). Urgent restocking is needed, while 28% is overstocked - consider reduction or redistribution. Only 27% of products is on target
 
-Inventory value and reorder cost were well aligned over time, except in October, where reorder cost slightly exceeded inventory value — may indicate over-ordering or discount period.
+3. Fruits & Vegetables have the highest inventory value and longest runout period, indicating potential overstock, holding cost and spoilage as there are perishables
+In contrast, Beverages and Bakery show shorter runout days, highlighting urgency for replenishment.
 
-# ✅ Recommendations
-Review reorder levels for high-priority items — adjust based on demand trends.
+🔺 Reorder Cost Volatility:
 
-Implement perishable category logic — cap runout days for items with limited shelf life.
+4. The line chart reveals that Inventory Value consistently exceeds Reorder Cost, indicating good cost control — except in October, where Reorder Cost slightly exceeds Inventory Value, possibly due to urgent or bulk restocking.
 
-Reduce stock holding for slow movers and reallocate space to fast-moving categories.
+In Febuary 2024 and 2025, both metrics show a gradual decline, possibly signaling: Slower sales or lower demand
 
-Automate restock alerts using Restock Priority + Estimated Runout Days filters.
+5. Inventory Status:
+About 47% of products are Active, while 33% are Backordered and 20% are Discontinued. This indicates strong operational health but with one-third of products facing availability or supply chain issues.
 
-Use Turnover Categories to guide pricing, bundling, and clearance strategies.
+6. Turnover Category:
+A majority (69.5%) of products are Fast-moving, which is a positive indicator of high product demand and efficient inventory turnover. However, 16.7% Moderate and 13.8% Slow-moving items may tie up capital or underperform in sales — requiring further attention.
+
+7. Avg Days in Stock vs Sales-to-Stock Ratio:
+Dairy and Seafood have high sales efficiency (high sales-to-stock ratios) but relatively short average days in stock, creating a risk of frequent stockouts.
+Bakery and Beverages have both low stock days and low sales-to-stock ratios, suggesting they may be low performers or over-ordered
+
+# 📌 Recommendation:
+1. 
+🔺 Restock urgent categories: Prioritize restocking categories with low runout days (e.g., Bakery, Beverages), close to or below reorder threshold to avoid stockouts.
+2. Reassess reorder points and review demand trends for overstocked categories.
+3. Investigate the October cost anomaly and assess whether current declining trends in both inventory and reorder cost reflect planned optimization or signal understocking risks.
+4. Review overstocked items like Fruits & Vegetables to reduce
+5. ✅ Double down on fast-movers: with 69.5% of products fast-moving, continue investing in demand planning and stock optimization to sustain efficiency.
+ excess holding costs or apply targeted promotions.
+6. 📦 Reassess slow/moderate movers: Review pricing, promotions, or replacement options for slow-moving items to prevent capital lockup.
+7. ⚠️ Stabilize backorders: With 33% of products backordered, consider investigating supplier lead times or introducing buffer stock for critical SKUs.
+
+Monitor sales-to-stock ratios to identify fast-moving items worth prioritizing in inventory and forecast models.
+
+Continuously monitor Sales-to-Stock Ratios to align stock levels with demand patterns.
 
 # 📌 Conclusion
 This dashboard allows any business to visualize and act on inventory data, prevent losses due to overstocking or stockouts, and align restocking efforts with sales patterns. It’s designed with both business stakeholders and analysts in mind, balancing high-level clarity with operational detail.
@@ -339,185 +366,5 @@ ORDER BY Stock_Quantity ASC;
     AVG(Sales_Volume) AS avg_sales
 FROM data-analytics-project-438511.grocery_inventory.inventory_analysis
 GROUP BY Status;
-
-# 9. Expired Stock Check (Considering Today’s Date: July 4, 2025)Items Past Expiration:SELECT 
-    Product_ID,
-    Product_Name,
-    Expiration_Date,
-    Stock_Quantity
-FROM data-analytics-project-438511.grocery_inventory.inventory_analysis
-WHERE Expiration_Date < CURRENT_DATE()
-ORDER BY Expiration_Date ASC;
-
-
-
-insights
-
-✅ Overstock Risk:
-Some categories (e.g., Fruits & Vegetables) are far above reorder level — may lead to holding cost.
-
-🔺 Reorder Cost Volatility:
-Inventory value and reorder cost trend don’t align in some months — flagging potential supply inefficiency.
-
-⛔ Runout Risk:
-Some categories have low stock with high sales-to-stock ratios — restock priority needed.
-
-🧮 Healthy Mix:
-Your stock status chart shows a good balance — ~47% Adequate Stock is a strong benchmark.
-
-# ✅ Insights
-
-- Fruits & Vegetables category shows high stock quantity significantly exceeding their reorder levels - suggesting overstocking which could increase storage costs or lead to spoilage.
-- Beverages, Bakery and Fat and Oil categories are approaching critical thresholds, indicating a need to review replenishment plans.
-- Grain and Pulses category has stock levels below reorder thresholds, putting them at high risk of stockouts and potential lost sales.
-- Dairy and Seafood categoroes are well aligned- efficient inventory control
-
-📌 Recommendation:
-Reassess reorder points and review demand trends for overstocked categories. For understocked groups, trigger timely replenishment to maintain service levels.
-
-
-2. **Inventory health**
-47% of all inventory are currently in low stock condition, indicating a widespread risk of stockouts if not addressed promptly. 28 % of inventory is overstocked, which may lead to excess holding costs and potentialwaste, especially for perishable goods.Only 27% of inventory is at an adequate stock level, suggesting improvement in inventory planning.
-
-for dashboard
-Nearly half of inventory is understocked (47%). Urgent restocking is needed, while 28% is overstocked - consider reduction or redistribution. Only 27% of products is on target
-
-3. 
-This trend highlights months where reorder costs spike despite stable inventory value — possibly due to supplier delays or uneven purchase planning.
-Look into months with sharp reorder cost peaks (e.g., Jan 2024, Apr 2024) for procurement review.
-
-4. Fruits & Vegetables have the highest inventory value and longest runout period, indicating potential overstock, holding cost and spoilage as there are perishables
-In contrast, Beverages and Bakery show shorter runout days, highlighting urgency for replenishment.
-
-5. The line chart reveals that Inventory Value consistently exceeds Reorder Cost, indicating good cost control — except in October, where Reorder Cost slightly exceeds Inventory Value, possibly due to urgent or bulk restocking.
-
-In Febuary 2024 and 2025, both metrics show a gradual decline, possibly signaling: Slower sales or lower demand
-
-📌 Recommendation:
-Investigate the October cost anomaly and assess whether current declining trends in both inventory and reorder cost reflect planned optimization or signal understocking risks.
-
-
-
-
-✅ Recommendations:
-Prioritize restocking categories with low runout days (e.g., Bakery, Beverages) to avoid stockouts.
-
-Review overstocked items like Fruits & Vegetables to reduce excess holding costs or apply targeted promotions.
-
-Investigate reorder cost spikes in months where inventory value remained stable — this may reveal opportunities for better supplier negotiation.
-
-Implement reorder urgency alerts based on runout days and restock priority to enhance replenishment decision-making.
-
-Monitor sales-to-stock ratios to identify fast-moving items worth prioritizing in inventory and forecast models.
-
-✅ Recommendations:
-Replenish critical categories like Bakery and Beverages to prevent stockouts.
-
-Audit overstocked categories, especially Fruits & Vegetables, to minimize waste and holding costs.
-
-Review October’s procurement data to understand the spike in reorder costs and identify improvement areas in supply planning.
-
-Leverage restock priority and runout days metrics to trigger timely reorder actions.
-
-Continuously monitor Sales-to-Stock Ratios to align stock levels with demand patterns.
-
-Would you like a condensed 2–3 sentence version for a manager view or executive report?
-
-
-
- Insights:
-Inventory Status:
-About 47% of products are Active, while 33% are Backordered and 20% are Discontinued. This indicates strong operational health but with one-third of products facing availability or supply chain issues.
-
-Turnover Category:
-A majority (69.5%) of products are Fast-moving, which is a positive indicator of high product demand and efficient inventory turnover. However, 16.7% Moderate and 13.8% Slow-moving items may tie up capital or underperform in sales — requiring further attention.
-
-Reorder Urgency Ratio vs Estimated Runout Days:
-Categories like Fruits & Vegetables and Dairy show both high urgency and shorter runout days, which means they are selling fast and may soon run out — prioritizing restocking here is critical.
-
-Restock Priority vs Runout Days:
-There’s a clear correlation between restock priority and stock depletion risk — Seafood, Grains & Pulses, and Fruits require immediate reorder actions based on their high turnover and short shelf life.
-
-Avg Days in Stock vs Sales-to-Stock Ratio:
-Dairy and Seafood have high sales efficiency (high sales-to-stock ratios) but relatively short average days in stock, creating a risk of frequent stockouts.
-Bakery and Beverages have both low stock days and low sales-to-stock ratios, suggesting they may be low performers or over-ordered.
-
-✅ Refined Recommendations:
-✅ Double down on fast-movers: Your inventory is working well — with 69.5% of products fast-moving, continue investing in demand planning and stock optimization to sustain efficiency.
-
-🔺 Restock urgent categories: Focus on high-turnover, low-stock categories like Fruits & Vegetables, Dairy, and Seafood — especially those with high reorder urgency ratios.
-
-📦 Reassess slow/moderate movers: Review pricing, promotions, or replacement options for slow-moving items to prevent capital lockup.
-
-⚠️ Stabilize backorders: With 33% of products backordered, consider investigating supplier lead times or introducing buffer stock for critical SKUs.
-
-📊 Balance runout vs reorder cost: Align restocking cycles with runout predictions to avoid emergency purchases or over-ordering.
-
-✍️ Optional Insight Box Title:
-“Performance Summary & Restocking Strategy”
-(or “Inventory Movement and Actionable Insights”)
-
-Would you like a 2-line executive version or caption text for each individual chart too?
-
-
-
-
-
-
-
-
-
-Ask ChatGPT
-You said:
-fruit and vegetable has highest reorder urgency and highest estimated days of runout
-
-
-ChatGPT said:
-Great observation, Grace — thank you for that! Since Fruits & Vegetables have the highest reorder urgency ratio and the longest estimated runout days, that changes the interpretation significantly. It means they're not at immediate risk of stockout, but the system is flagging them due to how their stock compares to reorder levels.
-
-Let me revise that insight to reflect this more accurately.
-
-✅ Updated Key Insight (Fruits & Vegetables Context)
-Fruits & Vegetables have the highest reorder urgency ratio (stock is low relative to reorder level), but also the longest runout days — indicating they are selling very slowly despite being close to the reorder threshold.
-🔍 This points to overstocking of a slow-selling item, and reorder thresholds may need to be recalibrated for this category.
-
-🔁 Replace This Part in the Insight Text:
-"Categories like Fruits & Vegetables and Dairy show both high urgency and shorter runout days..."
-
-Replace with:
-
-“Fruits & Vegetables show the highest reorder urgency but also have a long estimated runout period — a sign of slow sales combined with high reorder sensitivity. This may reflect excess stock flagged unnecessarily for replenishment, and suggests a need to review reorder level settings.”
-
-Would you like me to update the full Insight Corner text with this adjustment included?
-
-
-How do I present a meaningful insight and recommendation based on this 
-
-
-ChatGPT said:
-Great, Grace — now that you understand why Fruits & Vegetables show high estimated runout days, let's turn that into a clear, professional insight and recommendation that will impress in a dashboard or portfolio.
-
-✅ Ready-to-Use Insight & Recommendation (Fruits & Vegetables Case)
-🧠 Insight:
-Although Fruits & Vegetables display the highest estimated runout days (300+ days), this is due to low sales volume and high stock levels, not actual shelf-life. As a result, the system suggests the stock will last a long time, but in reality, these are perishable goods that will expire long before that period.
-This indicates overstocking of slow-moving perishable items, which poses a significant spoilage and cost risk.
-
-✅ Recommendation:
-Introduce category-specific logic for perishable products by:
-
-Setting a maximum shelf-life cap on runout days (e.g., 14–30 days).
-
-Creating an overstock flag when estimated runout exceeds the realistic shelf life.
-
-Reassessing reorder levels for Fruits & Vegetables to align with actual sales patterns and perishability.
-
-Consider running promotions or markdowns to accelerate sales and reduce waste.
-
-✍️ Bonus (Short Version for Insight Corner):
-Fruits & Vegetables appear overstocked with a runout period of 300+ days, but as perishables, they’ll expire long before. This mismatch signals a need for shelf-life-aware inventory controls and better demand alignment
-
-Fruits & Vegetables appear overstocked with a runout period of 300+ days, but as perishables, they’ll expire long before. This mismatch signals a need for shelf-life-aware inventory controls and better demand alignment
-
-
 
 
