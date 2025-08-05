@@ -32,7 +32,7 @@ I perform Exploratory Data Analysis (EDA) on the Grocery Inventory and Sales Dat
 - Detect patterns (e.g., seasonal sales, stockouts).
 - Prepare for deeper analysis (e.g., turnover).
 
-  ## SQL Queries for EDA.  
+## SQL Queries for EDA.  
 **1. Understand Table Structure**
 -- Purpose: Check column names, data types, and sample data - view table schema and sample rows
 ```SELECT *
