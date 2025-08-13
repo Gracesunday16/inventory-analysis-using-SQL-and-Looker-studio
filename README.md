@@ -1,5 +1,6 @@
 # Inventory Management Data Analytic project using SQL and Looker studio
-
+![Inventory Dashboard pg 1](https://github.com/Gracesunday16/inventory-analysis-using-SQL-and-Looker-studio/blob/d434f0976ce44a5cf3c1c8763358384e5e660c88/Dashboard.PNG)
+![Inventory Dashboard pg 2](https://github.com/Gracesunday16/inventory-analysis-using-SQL-and-Looker-studio/blob/d434f0976ce44a5cf3c1c8763358384e5e660c88/Dashboard%202.PNG)
 
 🎯 [Click here to view the full interactive dashboard](https://lookerstudio.google.com/reporting/84bcac4f-6cdf-42eb-bca8-625846fb63c6)
 
@@ -96,11 +97,11 @@ SELECT
 FROM data-analytics-project-438511.grocery_inventory.inventory_analysis;
 ```
 
-[Click to view all EDA queries](
+[Click to view all EDA queries](https://github.com/Gracesunday16/inventory-analysis-using-SQL-and-Looker-studio/blob/91edd778ea7389c8a08f74a39a6c623f6317c702/eda_queries.sql)
 
 ## 🔹  SQL for Data Preparation
 
-A combined SQL query was written to enrich the raw dataset with additional computed columns for analysis:
+The SQL query below was written to enrich the raw dataset with additional computed columns for analysis:
 
 ```sql
 SELECT
