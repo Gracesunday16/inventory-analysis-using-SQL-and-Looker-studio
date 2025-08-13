@@ -1,6 +1,7 @@
 # Inventory Management Data Analytic project using SQL and Looker studio
-![Inventory Dashboard pg 1](https://github.com/Gracesunday16/inventory-analysis-using-SQL-and-Looker-studio/blob/d434f0976ce44a5cf3c1c8763358384e5e660c88/Dashboard.PNG)
-![Inventory Dashboard pg 2](https://github.com/Gracesunday16/inventory-analysis-using-SQL-and-Looker-studio/blob/d434f0976ce44a5cf3c1c8763358384e5e660c88/Dashboard%202.PNG)
+![Inventory Dashboard pg 1](https://raw.github.com/Gracesunday16/inventory-analysis-using-SQL-and-Looker-studio/blob/d434f0976ce44a5cf3c1c8763358384e5e660c88/Dashboard.PNG)
+
+![Inventory Dashboard pg 2](https://raw.github.com/Gracesunday16/inventory-analysis-using-SQL-and-Looker-studio/blob/d434f0976ce44a5cf3c1c8763358384e5e660c88/Dashboard%202.PNG)
 
 🎯 [Click here to view the full interactive dashboard](https://lookerstudio.google.com/reporting/84bcac4f-6cdf-42eb-bca8-625846fb63c6)
 
